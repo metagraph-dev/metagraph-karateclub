@@ -1,0 +1,28 @@
+name: mgkarateclub
+
+channels:
+- conda-forge
+
+dependencies:
+# dev environment
+  - python=3.7
+  - coverage
+  - pytest
+  - pytest-cov
+  - black
+  - conda-forge::pre-commit
+  - setuptools
+
+# metagraph dependencies
+  - importlib_metadata
+  - numpy
+  - networkx
+  - pandas
+  - conda-forge::python-louvain
+  - scipy
+  - conda-forge::donfig
+  - conda-forge::grblas
+
+# metagraph-karateclub dependencies
+  - conda-forge::karateclub
+
