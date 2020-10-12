@@ -41,8 +41,8 @@ def get_config():
     cfg.VCS = "git"
     cfg.style = "pep440"
     cfg.tag_prefix = ""
-    cfg.parentdir_prefix = "metagraph_cuda-"
-    cfg.versionfile_source = "metagraph_cuda/_version.py"
+    cfg.parentdir_prefix = "metagraph_karateclub-"
+    cfg.versionfile_source = "metagraph_karateclub/_version.py"
     cfg.verbose = False
     return cfg
 

@@ -36,7 +36,7 @@ if has_karateclub:
             node: canonical_index
             for canonical_index, node in enumerate(sorted(graph.value.nodes))
         }
-        relabelled_graph = nx.relabel_nodes(graph.value, old2canonical)
+        relabelled_graph = nx.relabel_nodes(graph.value, old2canonical, copy=True)
         trainer.fit(relabelled_graph)
         np_embedding_matrix = trainer.get_embedding()
         matrix = NumpyMatrix(np_embedding_matrix)
