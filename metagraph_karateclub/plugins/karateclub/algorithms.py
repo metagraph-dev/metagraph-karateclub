@@ -40,7 +40,6 @@ if has_karateclub:
         trainer.fit(relabelled_graph)
         np_embedding_matrix = trainer.get_embedding()
         matrix = NumpyMatrix(np_embedding_matrix)
-        node_ids = np.array(list(graph.value.nodes))
         node2index = NumpyNodeMap(
             np.arange(len(graph.value.nodes)), node_ids=old2canonical
         )
