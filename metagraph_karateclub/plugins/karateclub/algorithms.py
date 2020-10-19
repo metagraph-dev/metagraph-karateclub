@@ -31,6 +31,8 @@ if has_karateclub:
             p=p,
             q=q,
             dimensions=embedding_size,
+            epochs=epochs,
+            learning_rate=learning_rate,
         )
         old2canonical = {
             node: canonical_index
