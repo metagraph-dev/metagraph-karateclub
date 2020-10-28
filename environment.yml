@@ -12,16 +12,7 @@ dependencies:
   - black
   - conda-forge::pre-commit
   - setuptools
-
-# metagraph dependencies
-  - importlib_metadata
-  - numpy
-  - networkx
-  - pandas
-  - conda-forge::python-louvain
-  - scipy
-  - conda-forge::donfig
-  - conda-forge::grblas
+  - metagraph::metagraph
 
 # metagraph-karateclub dependencies
   - conda-forge::karateclub
