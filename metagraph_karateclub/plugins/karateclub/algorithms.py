@@ -1,5 +1,6 @@
 from metagraph import concrete_algorithm
 from .. import has_karateclub
+from typing import Tuple
 
 if has_karateclub:
     import karateclub
@@ -9,7 +10,6 @@ if has_karateclub:
     from metagraph.plugins.numpy.types import (
         NumpyMatrix,
         NumpyNodeMap,
-        NumpyNodeEmbedding,
     )
 
     @concrete_algorithm("embedding.train.node2vec")
@@ -23,7 +23,7 @@ if has_karateclub:
         epochs: int,
         learning_rate: float,
         worker_count: int = 1,
-    ) -> NumpyNodeEmbedding:
+    ) -> Tuple[NumpyMatrix, NumpyNodeMap]:
         trainer = karateclub.Node2Vec(
             walk_number=walks_per_node,
             walk_length=walk_length,
@@ -45,4 +45,4 @@ if has_karateclub:
         node2index = NumpyNodeMap(
             np.arange(len(graph.value.nodes)), node_ids=old2canonical
         )
-        return NumpyNodeEmbedding(matrix, node2index)
+        return (matrix, node2index)
