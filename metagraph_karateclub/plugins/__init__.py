@@ -20,7 +20,5 @@ def find_plugins():
     # Ensure we import all items we want registered
     from . import karateclub
 
-    registry.register_from_modules(
-        karateclub, name="metagraph_karateclub_karateclub"
-    )  # TODO should we have a better naming convention?
+    registry.register_from_modules(karateclub)
     return registry.plugins

@@ -1,3 +1,4 @@
+import metagraph as mg
 from metagraph import concrete_algorithm
 from .. import has_karateclub
 from typing import Tuple
@@ -46,3 +47,36 @@ if has_karateclub:
             np.arange(len(graph.value.nodes)), node_ids=old2canonical
         )
         return (matrix, node2index)
+
+    @concrete_algorithm("embedding.train.graph2vec")
+    def karateclub_graph2vec_train(
+        graphs: mg.List[NetworkXGraph],
+        subgraph_degree: int,
+        embedding_size: int,
+        epochs: int,
+        learning_rate: float,
+        worker_count: int = 1,
+    ) -> NumpyMatrix:
+        if not all(nx.is_connected(graph.value) for graph in graphs):
+            raise ValueError("Graphs must be connected")
+        graph2vec_trainer = karateclub.Graph2Vec(
+            wl_iterations=subgraph_degree,
+            dimensions=embedding_size,
+            workers=worker_count,
+            epochs=epochs,
+            learning_rate=learning_rate,
+            min_count=0,
+        )
+        graph2vec_trainer.fit(
+            [
+                nx.relabel_nodes(
+                    graph.value,
+                    dict(map(reversed, enumerate(graph.value.nodes))),
+                    copy=True,
+                )
+                for graph in graphs
+            ]
+        )
+        np_embedding_matrix = graph2vec_trainer.get_embedding()
+        matrix = NumpyMatrix(np_embedding_matrix)
+        return matrix
