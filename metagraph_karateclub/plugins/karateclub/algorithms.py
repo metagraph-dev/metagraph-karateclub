@@ -9,7 +9,7 @@ if has_karateclub:
     import networkx as nx
     from metagraph.plugins.networkx.types import NetworkXGraph
     from metagraph.plugins.numpy.types import (
-        NumpyMatrix,
+        NumpyMatrixType,
         NumpyNodeMap,
     )
 
@@ -24,7 +24,7 @@ if has_karateclub:
         epochs: int,
         learning_rate: float,
         worker_count: int = 1,
-    ) -> Tuple[NumpyMatrix, NumpyNodeMap]:
+    ) -> Tuple[NumpyMatrixType, NumpyNodeMap]:
         trainer = karateclub.Node2Vec(
             walk_number=walks_per_node,
             walk_length=walk_length,
@@ -37,16 +37,15 @@ if has_karateclub:
         )
         old2canonical = {
             node: canonical_index
-            for canonical_index, node in enumerate(sorted(graph.value.nodes))
+            for canonical_index, node in enumerate(graph.value.nodes)
         }
         relabelled_graph = nx.relabel_nodes(graph.value, old2canonical, copy=True)
         trainer.fit(relabelled_graph)
         np_embedding_matrix = trainer.get_embedding()
-        matrix = NumpyMatrix(np_embedding_matrix)
         node2index = NumpyNodeMap(
-            np.arange(len(graph.value.nodes)), node_ids=old2canonical
+            np.arange(len(graph.value.nodes)), nodes=np.array(list(graph.value.nodes)),
         )
-        return (matrix, node2index)
+        return (np_embedding_matrix, node2index)
 
     @concrete_algorithm("embedding.train.graph2vec")
     def karateclub_graph2vec_train(
@@ -56,7 +55,7 @@ if has_karateclub:
         epochs: int,
         learning_rate: float,
         worker_count: int = 1,
-    ) -> NumpyMatrix:
+    ) -> NumpyMatrixType:
         if not all(nx.is_connected(graph.value) for graph in graphs):
             raise ValueError("Graphs must be connected")
         graph2vec_trainer = karateclub.Graph2Vec(
@@ -78,5 +77,4 @@ if has_karateclub:
             ]
         )
         np_embedding_matrix = graph2vec_trainer.get_embedding()
-        matrix = NumpyMatrix(np_embedding_matrix)
-        return matrix
+        return np_embedding_matrix
