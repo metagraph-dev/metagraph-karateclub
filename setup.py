@@ -10,5 +10,7 @@ setup(
     packages=find_packages(include=["metagraph_karateclub", "metagraph_karateclub.*"]),
     include_package_data=True,
     install_requires=["metagraph", "karateclub"],
-    entry_points={"metagraph.plugins": "plugins=metagraph_karateclub.plugins:find_plugins"},
+    entry_points={
+        "metagraph.plugins": "plugins=metagraph_karateclub.plugins:find_plugins"
+    },
 )
