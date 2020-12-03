@@ -1,5 +1,5 @@
 package:
-   name: metagraph_karateclub
+   name: metagraph-karateclub
    version: {{ environ.get('GIT_DESCRIBE_TAG', 'unknown') }}
 
 source:
@@ -18,6 +18,7 @@ requirements:
     - python >=3.7
     - karateclub
     - metagraph >=0.2.3
+    - gensim >=3.8.3  # otherwise smart_open is broken
 
 test:
   requires:
