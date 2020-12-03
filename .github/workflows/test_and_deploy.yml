@@ -99,6 +99,8 @@ jobs:
         run: |
           source "$CONDA/etc/profile.d/conda.sh"
           conda activate mg
+          python -c 'import karateclub'
+          python -c 'import metagraph_karateclub.plugins; assert metagraph_karateclub.plugins.has_karateclub'
           python -m metagraph.tests
           python -m metagraph.tests --dask
 
