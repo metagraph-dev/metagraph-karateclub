@@ -87,6 +87,8 @@ jobs:
           conda update -q conda
           conda create -n mg python=${{ matrix.pyver }} pytest coverage pytest-cov
           conda activate mg
+          # TODO: remove this hack once no longer necessary; without this, v1.8.0 installs in a broken state
+          conda install 'smart_open>=4.0.1'
           # Install built_package
           BUILT_PKG=`ls ./artifact_storage | head -1`
           conda install ./artifact_storage/$BUILT_PKG
