@@ -92,7 +92,7 @@ jobs:
           conda install ./artifact_storage/$BUILT_PKG
           # Install dependencies listed in built package
           # (This is a workaround because conda does not install dependencies for local file installs)
-          conda update -c ${{ env.CHANNELS }} metagraph_karateclub
+          conda update -c ${{ env.CHANNELS }} metagraph-karateclub
           conda list
       - name: Pytest
         # TODO: add `pytest --pyargs metagraph_karateclub` once tests exist
