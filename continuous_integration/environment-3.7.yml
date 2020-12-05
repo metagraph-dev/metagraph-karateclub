@@ -2,6 +2,7 @@ name: mg
 
 channels:
 - conda-forge
+- metagraph/label/dev
 
 dependencies:
 # dev environment
@@ -10,10 +11,9 @@ dependencies:
   - pytest
   - pytest-cov
   - black
-  - conda-forge::pre-commit
+  - pre-commit
   - setuptools
-  - metagraph::metagraph
 
 # metagraph-karateclub dependencies
-  - conda-forge::karateclub
-
+  - karateclub
+  - metagraph
