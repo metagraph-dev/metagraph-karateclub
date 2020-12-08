@@ -97,12 +97,11 @@ jobs:
           conda update -c ${{ env.CHANNELS }} metagraph-karateclub
           conda list
       - name: Pytest
-        # TODO: add `pytest --pyargs metagraph_karateclub` once tests exist
         run: |
           source "$CONDA/etc/profile.d/conda.sh"
           conda activate mg
           python -c 'import karateclub'
-          python -c 'import metagraph_karateclub.plugins; assert metagraph_karateclub.plugins.has_karateclub'
+          pytest --pyargs metagraph_karateclub
           python -m metagraph.tests
           python -m metagraph.tests --dask
 
