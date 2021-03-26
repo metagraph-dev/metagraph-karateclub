@@ -13,23 +13,24 @@ env:
 jobs:
   daily_check:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -l {0}
     steps:
-      - name: Setup conda env
+      - name: Create env
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          auto-update-conda: true
+          python-version: ${{ env.PYVER }}
+      - name: Update env
         run: |
-          source "$CONDA/etc/profile.d/conda.sh"
-          conda config --set always_yes yes --set changeps1 no
-          conda update -q conda
-          conda create -n mg python=${{ env.PYVER }} pytest coverage pytest-cov
-          conda activate mg
           # TODO: remove this hack once no longer necessary; without this, v1.8.0 installs in a broken state
           conda install 'smart_open>=4.0.1'
           # Install package using latest "dev" versions from metagraph channel
-          conda install -c ${{ env.CHANNELS }} metagraph-karateclub
+          conda install -c ${{ env.CHANNELS }} metagraph-karateclub metagraph-dev
           conda list
       - name: Pytest
         run: |
-          source "$CONDA/etc/profile.d/conda.sh"
-          conda activate mg
           python -c 'import karateclub'
           pytest --pyargs metagraph_karateclub
           python -m metagraph.tests
