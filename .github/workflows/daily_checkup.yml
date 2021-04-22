@@ -27,7 +27,7 @@ jobs:
           # TODO: remove this hack once no longer necessary; without this, v1.8.0 installs in a broken state
           conda install 'smart_open>=4.0.1'
           # Install package using latest "dev" versions from metagraph channel
-          conda install -c ${{ env.CHANNELS }} metagraph-karateclub metagraph-dev
+          conda install -c ${{ env.CHANNELS }} metagraph-karateclub 'metagraph-dev>=0.2.6'
           conda list
       - name: Pytest
         run: |
